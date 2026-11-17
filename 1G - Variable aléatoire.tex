@@ -1,0 +1,214 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage{mathtools}
+
+\geometry{margin=2.5cm}
+
+% --- Macros utiles ---
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\OmegaSet}{\Omega}
+\newcommand{\acompleter}{\fbox{À compléter}}
+
+% --- Style des cadres ---
+\mdfdefinestyle{coursbox}{
+  linewidth=0.8pt,
+  linecolor=black,
+  backgroundcolor=white,
+  roundcorner=0pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  skipabove=10pt,
+  skipbelow=10pt
+}
+
+% --- Environnements simples ---
+\newenvironment{remarque}{\par\smallskip\noindent\textbf{Remarque. \\}\ignorespaces}{\par\smallskip}
+\newenvironment{remarques}{\par\smallskip\noindent\textbf{Remarques. \\}\ignorespaces}{\par\smallskip}
+\newenvironment{exemple}{\par\smallskip\noindent\textbf{Exemple. \\}\ignorespaces}{\par\smallskip}
+\newenvironment{demonstration}{\par\smallskip\noindent\textbf{Démonstration. \\}\ignorespaces}{\par\smallskip}
+\newenvironment{historique}{\par\smallskip\noindent\textbf{Historique. \\}\ignorespaces}{\par\smallskip}
+\newenvironment{notations}{\par\smallskip\noindent\textbf{Notations. \\}\ignorespaces}{\par\smallskip}
+
+% --- Environnements encadrés ---
+\newmdenv[style=coursbox]{definition}
+\newmdenv[style=coursbox]{definitions}
+\newmdenv[style=coursbox]{propriete}
+\newmdenv[style=coursbox]{proprietes}
+
+\begin{document}
+
+\begin{definition}
+\begin{center}
+    {\Huge\bfseries Variable aléatoire}
+\end{center}
+\end{definition}
+
+\begin{historique}
+En 1654, Blaise Pascal (1623--1662) entretient avec Pierre de Fermat (1601--1665) des correspondances sur le thème des jeux de hasard et de l'espérance de gain. Ils s'intéressent notamment à des problèmes de dénombrement, comme celui du chevalier de Méré : comment distribuer équitablement les mises d'un jeu de hasard interrompu avant sa fin ?
+
+Ces travaux fondateurs établirent les bases de la théorie moderne des probabilités, ouvrant la voie aux développements ultérieurs de Jacob Bernoulli (1654--1705) sur la loi des grands nombres et de Pierre-Simon de Laplace (1749--1827) sur la théorie des probabilités.
+\end{historique}
+
+\section{Variable aléatoire}
+
+\begin{definition}
+Soit $\Omega$ l'ensemble fini des issues d'une expérience aléatoire.
+
+Une \emph{variable aléatoire} $X$ définie sur $\Omega$ est une fonction qui, à chaque issue de $\Omega$, associe un nombre réel.
+\end{definition}
+
+\begin{exemple}
+Soit l'expérience aléatoire : « On lance un dé à six faces et on regarde le résultat. »
+\begin{itemize}
+    \item Si le résultat est pair, on gagne $2\,€$.
+    \item Si le résultat est $1$, on gagne $3\,€$.
+    \item Si le résultat est $3$ ou $5$, on perd $4\,€$.
+\end{itemize}
+On définit ainsi une variable aléatoire $X$ sur l'univers $\Omega=\{1;2;3;4;5;6\}$ qui peut prendre les valeurs $2$, $3$ ou $-4$.
+\end{exemple}
+
+\begin{notations}
+\begin{itemize}
+    \item Une variable aléatoire est souvent notée en majuscule : $X$, $Y$, $Z$, $G$, \,\ldots
+    \item L'ensemble des valeurs prises par $X$ se note $X(\Omega)$.
+    \item Si $X(\Omega)=\{x_1;x_2;\ldots;x_n\}$, l'événement « $X$ prend la valeur $x_i$ » se note $\{X=x_i\}$.
+    \item La probabilité de l'événement $\{X=x_i\}$ se note $P(\{X=x_i\})$ ou, plus simplement, $P(X=x_i)$.
+\end{itemize}
+\end{notations}
+
+\begin{exemple}
+Pour l'exemple précédent, préciser à quoi correspondent $X(\Omega)$ et l'événement « gagner deux euros ».
+
+On a
+\[
+X(\Omega)=\{-4;2;3\}.
+\]
+L'événement « gagner deux euros » se note $\{X=2\}$. Il est composé des issues « obtenir un deux », « obtenir un quatre » et « obtenir un six ». Sa probabilité est
+\[
+P(X=2)=\frac{3}{6}=\frac12.
+\]
+\end{exemple}
+
+\section{Loi de probabilité d'une variable aléatoire}
+
+\begin{definition}
+Soit une variable aléatoire $X$ définie sur un univers fini $\Omega$, et prenant les valeurs $x_1,x_2,\ldots,x_n$.
+
+La \emph{loi de probabilité} de $X$ associe à toute valeur $x_i$ la probabilité $P(X=x_i)$.
+\end{definition}
+
+\begin{remarque}
+$P(X=x_i)$ peut se noter $p_i$.
+\end{remarque}
+
+On peut présenter la loi de $X$ sous la forme d'un tableau :
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|cccc}
+$x_i$ & $x_1$ & $\cdots$ & $\cdots$ & $x_n$ \\
+\hline
+$P(X=x_i)$ & $p_1$ & $\cdots$ & $\cdots$ & $p_n$
+\end{tabular}
+\end{center}
+
+\begin{exemple}
+Soit l'expérience aléatoire : « On tire une carte dans un jeu de 32 cartes. » On considère le jeu suivant :
+\begin{itemize}
+    \item si on tire un cœur, on gagne $2\,€$ ;
+    \item si on tire un roi, on gagne $5\,€$ ;
+    \item si on tire une autre carte, on perd $1\,€$.
+\end{itemize}
+On appelle $X$ la variable aléatoire qui, à une carte tirée, associe un gain ou une perte. Déterminer la loi de probabilité de $X$.
+
+La variable aléatoire $X$ peut prendre les valeurs $2$, $5$, $-1$, mais aussi $7$. En effet, si on tire le roi de cœur, on gagne $2+5=7\,€$.
+\begin{itemize}
+    \item Si la carte tirée est un cœur, mais pas le roi, $X=2$ et $P(X=2)=\dfrac{7}{32}$.
+    \item Si la carte tirée est un roi, mais pas celui de cœur, $X=5$ et $P(X=5)=\dfrac{3}{32}$.
+    \item Si la carte tirée est le roi de cœur, $X=7$ et $P(X=7)=\dfrac{1}{32}$.
+    \item Si la carte tirée n'est ni un roi ni un cœur, $X=-1$ et $P(X=-1)=\dfrac{21}{32}$.
+\end{itemize}
+La loi de probabilité de $X$ est donc :
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|cccc}
+$x_i$ & $-1$ & $2$ & $5$ & $7$ \\
+\hline
+$P(X=x_i)$ & $\dfrac{21}{32}$ & $\dfrac{7}{32}$ & $\dfrac{3}{32}$ & $\dfrac{1}{32}$
+\end{tabular}
+\end{center}
+\end{exemple}
+
+\begin{remarques}
+On a en particulier :
+\begin{itemize}
+    \item $0\leq p_i\leq 1$ ;
+    \item $p_1+p_2+\cdots+p_n=1$.
+\end{itemize}
+\end{remarques}
+
+\section{Espérance, variance, écart-type}
+
+\begin{definitions}
+Soit une variable aléatoire $X$ définie sur un univers $\Omega$ et prenant les valeurs $x_1,x_2,\ldots,x_n$.
+
+Soit la loi de probabilité de $X$ qui associe à toute valeur $x_i$ la probabilité $p_i=P(X=x_i)$.
+\begin{itemize}
+    \item L'\emph{espérance mathématique} de la loi de probabilité de $X$ est :
+    \[
+    E(X)=p_1x_1+p_2x_2+\cdots+p_nx_n.
+    \]
+    \item La \emph{variance} de la loi de probabilité de $X$ est :
+    \[
+    V(X)=p_1(x_1-E(X))^2+p_2(x_2-E(X))^2+\cdots+p_n(x_n-E(X))^2.
+    \]
+    \item L'\emph{écart-type} de la loi de probabilité de $X$ est :
+    \[
+    \sigma(X)=\sqrt{V(X)}.
+    \]
+\end{itemize}
+\end{definitions}
+
+\begin{remarques}
+\begin{itemize}
+    \item L'espérance est la moyenne de la série des $x_i$, pondérée par les probabilités $p_i$.
+    \item La variance est la moyenne des carrés des écarts par rapport à cette espérance. L'écart-type représente donc de combien on s'écarte de l'espérance, en moyenne.
+\end{itemize}
+\end{remarques}
+
+\begin{exemple}
+Considérant le jeu de l'exemple précédent, calculer l'espérance, la variance et l'écart-type de la loi de probabilité de $X$, puis interpréter les résultats pour l'espérance et l'écart-type.
+
+\begin{align*}
+E(X)&=\frac{21}{32}\times(-1)+\frac{7}{32}\times2+\frac{3}{32}\times5+\frac{1}{32}\times7\\
+&=\frac{15}{32}.
+\end{align*}
+
+\begin{align*}
+V(X)&=\frac{21}{32}\left(-1-\frac{15}{32}\right)^2
++\frac{7}{32}\left(2-\frac{15}{32}\right)^2
++\frac{3}{32}\left(5-\frac{15}{32}\right)^2
++\frac{1}{32}\left(7-\frac{15}{32}\right)^2\\
+&\approx 5{,}1865.
+\end{align*}
+
+\[
+\sigma(X)\approx\sqrt{5{,}1865}\approx 2{,}28.
+\]
+
+L'espérance, égale à $\dfrac{15}{32}\approx 0{,}5$, signifie qu'en jouant un grand nombre de fois, on peut espérer gagner en moyenne $0{,}50\,€$ par partie.
+
+L'écart-type, égal à environ $2{,}28$, signifie qu'avec une espérance proche de $0{,}50\,€$, le risque de perdre de l'argent est important.
+\end{exemple}
+
+\end{document}
